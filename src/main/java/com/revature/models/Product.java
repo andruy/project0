@@ -23,8 +23,51 @@ public class Product {
     private double product_price; // This tells Hibernate to create a double field for the price column in the database
     private int product_quantity; // This tells Hibernate to create an int field for the quantity column in the database
 
+
+
     @ManyToMany
     @JoinTable(name = "order_product", schema = "project0", joinColumns = @JoinColumn(name = "product_id"),
             inverseJoinColumns = @JoinColumn(name = "order_id"))
     Set<Order> orders_product;
+
+
+    public int getProduct_id() {
+        return product_id;
+    }
+
+    public void setProduct_id(int product_id) {
+        this.product_id = product_id;
+    }
+
+    public String getProduct_name() {
+        return product_name;
+    }
+
+    public void setProduct_name(String product_name) {
+        this.product_name = product_name;
+    }
+
+    public double getProduct_price() {
+        return product_price;
+    }
+
+    public void setProduct_price(double product_price) {
+        this.product_price = product_price;
+    }
+
+    public int getProduct_quantity() {
+        return product_quantity;
+    }
+
+    public void setProduct_quantity(int product_quantity) {
+        this.product_quantity = product_quantity;
+    }
+
+    public Set<Order> getOrders() {
+        return orders_product;
+    }
+
+    public Set<Order> getOrders_product() {
+        return orders_product;
+    }
 }

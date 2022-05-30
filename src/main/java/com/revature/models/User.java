@@ -36,6 +36,7 @@ public class User {
     // in the cart table that references the user_id column in the user table
     private List<Order> order;  // This tells Hibernate to create a list of orders for this user
 
+
     //Getter and Setter for the user's role
     public int getUser_id() { //This is the getter for the user_id
         return user_id; //This returns the user_id

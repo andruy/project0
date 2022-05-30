@@ -3,12 +3,8 @@ package com.revature.models;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.GenerationTime;
 
 import javax.persistence.*;
-import java.security.Timestamp;
-import java.time.ZonedDateTime;
-import java.util.List;
 import java.util.Set;
 
 @Entity // This tells Hibernate to make a table out of this class
@@ -32,4 +28,12 @@ public class Order {
 
     @ManyToMany(mappedBy = "orders_product")
     Set<Product> products_order;
+
+    public void addProduct(Product   product) {
+        products_order.add(product);
+    }
+
+    public void assignUser(User user) {
+        user_id = user.getUser_id();
+    }
 }
