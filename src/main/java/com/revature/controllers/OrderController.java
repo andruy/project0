@@ -20,7 +20,7 @@ import java.util.Optional;
 public class OrderController {
 
     @Autowired
-    OrderRepository orderRepository;
+    private OrderRepository orderRepository;
 
     @Autowired
     ProductRepository productRepository;
