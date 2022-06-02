@@ -30,6 +30,7 @@ public class ProductController {
         return productRepository.findById(product_id).get();
     }
 
+    //Code to delete
     @Authorized(allowedRoles = {Role.ADMIN, Role.EMPLOYEE, Role.CUSTOMER})
     @GetMapping("/{product_id}/orders")
     Set<Order> getOrders(@PathVariable("product_id") int product_id) {
@@ -41,6 +42,15 @@ public class ProductController {
     @PostMapping
     Product createProduct(@RequestBody Product product) {
         return productRepository.save(product);
+    }
+
+    @PutMapping("/{product_id}")
+    Product updateProduct(@PathVariable("product_id") int product_id, @RequestBody Product product) {
+        Product productToUpdate = productRepository.findById(product_id).get();
+        productToUpdate.setProduct_name(product.getProduct_name());
+        productToUpdate.setProduct_price(product.getProduct_price());
+        productToUpdate.setProduct_quantity(product.getProduct_quantity());
+        return productRepository.save(productToUpdate);
     }
 
 }

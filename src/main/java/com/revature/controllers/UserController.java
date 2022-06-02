@@ -1,6 +1,7 @@
 package com.revature.controllers;
 
 import com.revature.annotations.Authorized;
+import com.revature.models.Product;
 import com.revature.models.Role;
 import com.revature.models.User;
 import com.revature.services.AuthorizationService;
@@ -34,19 +35,29 @@ public class UserController {
         return ResponseEntity.ok(userService.findById(user_id));
     }
 
-    @Authorized(allowedRoles = {Role.ADMIN})
     @PostMapping
     public ResponseEntity<User> insert(@RequestBody User user) {
         return ResponseEntity.accepted().body(userService.insert(user));
     }
 
-    @Authorized(allowedRoles = {Role.ADMIN, Role.CUSTOMER, Role.EMPLOYEE})
-    @PutMapping
-    public ResponseEntity<User> update(@RequestBody User user) {
-        authorizationService.guardByUserId(user.getUser_id());
-        // We will also check if this resource belongs to the User, even if they pass the @Authorized annotation
-        return ResponseEntity.accepted().body(userService.update(user));
+    @Authorized(allowedRoles = {Role.ADMIN, Role.EMPLOYEE})
+    @PutMapping("/{user_id}")
+    User updateUser(@PathVariable("user_id") int user_id, @RequestBody User user) {
+        User userToUpdate = userService.findById(user_id);
+        userToUpdate.setFirstname(user.getFirstname());
+        userToUpdate.setLastname(user.getLastname());
+        userToUpdate.setEmail(user.getEmail());
+        userToUpdate.setPassword(user.getPassword());
+        return userService.update(userToUpdate);
     }
+
+
+//    public ResponseEntity<User> update(@RequestBody User user) {
+//        authorizationService.guardByUserId(user.getUser_id());
+//        // We will also check if this resource belongs to the User, even if they pass the @Authorized annotation
+//        return ResponseEntity.accepted().body(userService.update(user));
+//    }
+
 
     @Authorized(allowedRoles = {Role.ADMIN})
     @DeleteMapping("/{user_id}")
